@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
         aiSummaryText: document.getElementById('aiSummaryText')
     };
 
-    // Base URL for API (empty string means same origin when deployed, or localhost:5000 for dev)
-    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-        ? 'http://localhost:5000/api' 
-        : '/api';
+    // When local: Flask runs on port 7860. When on HuggingFace Spaces: same origin, so /api works.
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE = isLocal ? 'http://localhost:7860/api' : '/api';
 
     // Update range slider value display
     elements.soilMoisture.addEventListener('input', (e) => {

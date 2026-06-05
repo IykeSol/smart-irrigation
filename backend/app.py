@@ -151,4 +151,6 @@ def predict():
         return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Port 7860 is required for HuggingFace Spaces
+    # host='0.0.0.0' makes the server accessible inside Docker
+    app.run(debug=False, host='0.0.0.0', port=7860)

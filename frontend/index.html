@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Scheduler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="logo">
+                <h1>Irrigation Scheduler</h1>
+                <p>Data-Driven Agricultural Intelligence</p>
+            </div>
+            <div class="status-indicator">
+                <div class="pulse"></div>
+                <span>System Online</span>
+            </div>
+        </header>
+
+        <main class="grid-container">
+            <!-- Fetch Weather Panel -->
+            <section class="panel fetch-panel">
+                <div class="panel-header">
+                    <h2>Location Data</h2>
+                </div>
+                <div class="input-group">
+                    <label for="cityInput">City Name</label>
+                    <input type="text" id="cityInput" placeholder="e.g., London, Tokyo, Lagos">
+                </div>
+                <button id="fetchWeatherBtn" class="btn primary-btn">Fetch Live Weather</button>
+                <div id="weatherLoader" class="loader hidden"></div>
+                <div id="weatherError" class="error-msg hidden"></div>
+            </section>
+
+            <!-- Environmental Parameters Panel -->
+            <section class="panel parameters-panel">
+                <div class="panel-header">
+                    <h2>Environmental Parameters</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="temp">Temperature (C)</label>
+                        <input type="number" id="temp" step="0.1" value="25.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="humidity">Humidity (%)</label>
+                        <input type="number" id="humidity" step="0.1" value="60.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="rain24h">Rainfall Last 24h (mm)</label>
+                        <input type="number" id="rain24h" step="0.1" value="0.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="forecastRain">Forecast Rain (mm)</label>
+                        <input type="number" id="forecastRain" step="0.1" value="0.0">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Farm Parameters Panel -->
+            <section class="panel farm-panel">
+                <div class="panel-header">
+                    <h2>Farm Status</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="input-group full-width">
+                        <label for="soilMoisture">Soil Moisture (%)</label>
+                        <input type="range" id="soilMoisture" min="0" max="100" value="40">
+                        <span id="soilMoistureVal" class="range-val">40%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="cropType">Crop Type</label>
+                        <select id="cropType">
+                            <option value="Wheat">Wheat</option>
+                            <option value="Corn">Corn</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Soybean">Soybean</option>
+                            <option value="Tomato">Tomato</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="growthStage">Growth Stage</label>
+                        <select id="growthStage">
+                            <option value="Seedling">Seedling</option>
+                            <option value="Vegetative">Vegetative</option>
+                            <option value="Flowering">Flowering</option>
+                            <option value="Fruiting">Fruiting</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="predictBtn" class="btn action-btn">Calculate Irrigation Needs</button>
+            </section>
+
+            <!-- Result Panel -->
+            <section class="panel result-panel">
+                <div class="panel-header">
+                    <h2>Model Recommendation</h2>
+                </div>
+                <div class="result-display">
+                    <div id="actionResult" class="action-text">Awaiting Data</div>
+                    <div class="confidence-wrapper">
+                        <div class="confidence-label">Confidence Score</div>
+                        <div id="confidenceScore" class="confidence-value">--%</div>
+                    </div>
+                </div>
+
+                <div class="ai-summary-container hidden" id="aiSummaryContainer">
+                    <h3>Agronomist AI Summary</h3>
+                    <p id="aiSummaryText"></p>
+                </div>
+                
+                <div class="probabilities-container">
+                    <h3>Probability Breakdown</h3>
+                    <div class="prob-bar-group">
+                        <div class="prob-label">No Irrigation</div>
+                        <div class="prob-track"><div id="prob-0" class="prob-fill" style="width: 0%"></div></div>
+                        <div id="prob-val-0" class="prob-val">0%</div>
+                    </div>
+                    <div class="prob-bar-group">
+                        <div class="prob-label">Light Irrigation</div>
+                        <div class="prob-track"><div id="prob-1" class="prob-fill" style="width: 0%"></div></div>
+                        <div id="prob-val-1" class="prob-val">0%</div>
+                    </div>
+                    <div class="prob-bar-group">
+                        <div class="prob-label">Heavy Irrigation</div>
+                        <div class="prob-track"><div id="prob-2" class="prob-fill" style="width: 0%"></div></div>
+                        <div id="prob-val-2" class="prob-val">0%</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
